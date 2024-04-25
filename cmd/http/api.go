@@ -12,6 +12,10 @@ import (
 func main() {
 	baseDep := config.NewBaseDep()
 	loadEnv(baseDep.Logger)
+	_, err := config.NewDbPool(baseDep.Logger)
+	if err != nil {
+		os.Exit(1)
+	}
 
 	app := fiber.New()
 
