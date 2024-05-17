@@ -3,12 +3,14 @@ package main
 import (
 	"fmt"
 	"github.com/SyamSolution/user-service/config"
+	"github.com/SyamSolution/user-service/config/middleware"
+	middleware2 "github.com/SyamSolution/user-service/config/middleware"
 	"github.com/SyamSolution/user-service/internal/handler"
 	"github.com/SyamSolution/user-service/internal/repository"
 	"github.com/SyamSolution/user-service/internal/usecase"
-	"github.com/SyamSolution/user-service/middleware"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
+	"github.com/prometheus/client_golang/prometheus"
 	"log"
 	"os"
 )
@@ -20,6 +22,10 @@ func main() {
 	if err != nil {
 		os.Exit(1)
 	}
+
+	dbCollector := middleware.NewStatsCollector("assesment", db)
+	prometheus.MustRegister(dbCollector)
+	fiberProm := middleware.NewWithRegistry(prometheus.DefaultRegisterer, "smilley", "", "", map[string]string{})
 
 	//=== repository lists start ===//
 	userRepo := repository.UserRepository(repository.UserRepository{
@@ -45,12 +51,16 @@ func main() {
 		return c.SendString("Hello, World!")
 	})
 
+	//=== metrics route
+	fiberProm.RegisterAt(app, "/metrics")
+	app.Use(fiberProm.Middleware)
+
 	//=== user routes ===//
 	app.Post("/users/register", userHandler.CreateUser)
 	app.Post("/users/confirm", userHandler.ConfirmUser)
 	app.Post("/users/login", userHandler.SignIn)
 	app.Get("/users/refresh-token", userHandler.RefreshToken)
-	app.Get("/users/profile", middleware.Auth(), userHandler.GetUser)
+	app.Get("/users/profile", middleware2.Auth(), userHandler.GetUser)
 
 	//=== listen port ===//
 	if err := app.Listen(fmt.Sprintf(":%s", "3000")); err != nil {
