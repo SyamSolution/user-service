@@ -63,7 +63,7 @@ func main() {
 	app.Get("/users/profile", middleware2.Auth(), userHandler.GetUser)
 
 	//=== listen port ===//
-	if err := app.Listen(fmt.Sprintf(":%s", "3000")); err != nil {
+	if err := app.Listen(fmt.Sprintf(":%s", os.Getenv("APP_PORT"))); err != nil {
 		log.Fatal(err)
 	}
 }
