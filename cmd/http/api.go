@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
+
 	"github.com/SyamSolution/user-service/config"
 	"github.com/SyamSolution/user-service/config/middleware"
 	middleware2 "github.com/SyamSolution/user-service/config/middleware"
@@ -11,8 +14,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 	"github.com/prometheus/client_golang/prometheus"
-	"log"
-	"os"
 )
 
 func main() {
@@ -25,7 +26,7 @@ func main() {
 
 	dbCollector := middleware.NewStatsCollector("assesment", db)
 	prometheus.MustRegister(dbCollector)
-	fiberProm := middleware.NewWithRegistry(prometheus.DefaultRegisterer, "smilley", "", "", map[string]string{})
+	fiberProm := middleware.NewWithRegistry(prometheus.DefaultRegisterer, "user-service", "", "", map[string]string{})
 
 	//=== repository lists start ===//
 	userRepo := repository.UserRepository(repository.UserRepository{
