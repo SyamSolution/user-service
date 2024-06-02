@@ -7,7 +7,6 @@ import (
 
 	"github.com/SyamSolution/user-service/config"
 	"github.com/SyamSolution/user-service/config/middleware"
-	middleware2 "github.com/SyamSolution/user-service/config/middleware"
 	"github.com/SyamSolution/user-service/internal/handler"
 	"github.com/SyamSolution/user-service/internal/repository"
 	"github.com/SyamSolution/user-service/internal/usecase"
@@ -47,7 +46,7 @@ func main() {
 	//=== handler lists end ===//
 
 	app := fiber.New()
-
+	
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Hello, World!")
 	})
@@ -61,7 +60,7 @@ func main() {
 	app.Post("/users/confirm", userHandler.ConfirmUser)
 	app.Post("/users/login", userHandler.SignIn)
 	app.Get("/users/refresh-token", userHandler.RefreshToken)
-	app.Get("/users/profile", middleware2.Auth(), userHandler.GetUser)
+	app.Get("/users/profile", middleware.Auth(), userHandler.GetUser)
 
 	//=== listen port ===//
 	if err := app.Listen(fmt.Sprintf(":%s", os.Getenv("APP_PORT"))); err != nil {

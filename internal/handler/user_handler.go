@@ -105,7 +105,7 @@ func (handler *User) SignIn(c *fiber.Ctx) error {
 			"refresh_token": *initiateAuthOutput.AuthenticationResult.RefreshToken,
 		},
 		Meta: model.Meta{
-			Code:    fiber.StatusCreated,
+			Code:    fiber.StatusOK,
 			Message: "login successfully",
 		},
 	})
