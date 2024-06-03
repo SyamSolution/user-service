@@ -1,34 +1,90 @@
 # User Service
 
-User Service is a microservice for managing user data. It provides endpoints for creating, updating, retrieving, and deleting users.
+## Name
 
-## Table of Contents
+user-service
 
-- [User Service](#user-service)
-  - [Features](#features)
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [Configuration](#configuration)
-  - [Contributing](#contributing)
-  - [License](#license)
-  - [Contact](#contact)
+## Description
 
-## Features
-
-- Create a new user
-- Retrieve user details
-- Update user information
-- Delete a user
+User Service is service that used to manage user login, registration, and profile
 
 ## Installation
 
-### Prerequisites
+1. Ensure, already install golang 1.21 or up
+2. Create file .env
 
-- [Docker](https://www.docker.com/get-started) (version 20.10 or later)
-
-### Clone the Repository
-
-```sh
-git clone https://github.com/SyamSolution/user-service.git
-cd user-service
+```bash
+    cp env_example .env
 ```
+
+3. Fill out the env configuration
+
+```bash
+# APP
+APP_PORT=4001
+
+# DATABASE
+DATABASE_USER=
+DATABASE_PASSWORD=
+DATABASE_HOST=
+DATABASE_PORT=
+DATABASE_SCHEMA=
+DATABASE_CONN_MAX_LIFETIME=
+DATABASE_MAX_OPEN_CONN=
+DATABASE_MAX_IDLE_CONN=
+
+# AWS
+AWS_REGION=
+AWS_COGNITO_CLIENT_ID=
+AWS_COGNITO_USER_POOL_ID=
+```
+
+4. Install dependencies:
+
+```bash
+make install
+```
+
+5. Run in development:
+
+```bash
+make run
+```
+
+## Test
+
+1. Run unit test
+
+```bash
+make unit-test
+```
+
+2. Show local coverage (in html)
+
+```bash
+make coverage
+```
+
+## High Level Design Architecture
+
+![picture](assets/high-level-architecture.png)
+
+## Low Level Design Architecture
+
+![picture](assets/low-level.png)
+
+## ERD
+
+![picture](assets/erd.png)
+
+## Authors
+
+- **Syamsul Bachri** - [Github](https://github.com/SyamSolution)
+
+## Development Tools
+
+- [Fiber](https://gofiber.io/) Rest Framework
+- [Zap](https://github.com/uber-go/zap) Log Management
+- [Go mod](https://go.dev/ref/mod) Depedency Management
+- [Docker](https://www.docker.com/) Container Management
+- [Amazon SQS](https://aws.amazon.com/sqs/) Event Management
