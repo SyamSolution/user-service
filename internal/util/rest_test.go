@@ -3,7 +3,7 @@ package util
 import (
 	"testing"
 
-	"github.com/SyamSolution/transaction-service/internal/model"
+	"github.com/SyamSolution/user-service/internal/model"
 	"github.com/gofiber/fiber/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/valyala/fasthttp"
