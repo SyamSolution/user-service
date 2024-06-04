@@ -8,7 +8,7 @@ import (
 )
 
 type UserUsecase struct {
-	UserRepo repository.UserRepository
+	UserRepo repository.UserPersister
 }
 
 type UserExecutor interface {
