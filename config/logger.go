@@ -15,7 +15,7 @@ type Logger interface {
 }
 
 func SetupLogger() Logger {
-	lg, _ := zap.NewProduction()
+	lg, _ := zap.NewProduction() 
 	defer func() {
 		_ = lg.Sync()
 	}()

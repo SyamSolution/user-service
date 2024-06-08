@@ -33,7 +33,7 @@ func main() {
 	fiberProm := middleware.NewWithRegistry(prometheus.DefaultRegisterer, "user-service", "", "", map[string]string{})
 
 	//=== repository lists start ===//
-	userRepo := repository.UserRepository(repository.UserRepository{
+	userRepo := repository.NewUserRepository(repository.UserRepository{
 		DB: db,
 	})
 	//=== repository lists end ===//
@@ -52,7 +52,7 @@ func main() {
 
 	app := fiber.New()
 
-
+	
 	app.Use(recover.New())
 	app.Use(cors.New())
 	app.Use(pprof.New())
