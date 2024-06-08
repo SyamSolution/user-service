@@ -57,8 +57,7 @@ func main() {
 	app.Use(cors.New())
 	app.Use(pprof.New())
 	app.Use(logger.New(logger.Config{
-		// Format: "[${time}] ${status} - ${latency} ${method} ${path}\n",
-		Format:       `${time} {"router_activity" : [${status},"${latency}","${method}","${path}"], "query_param":${queryParams}, "body_param":${body}}` + "\n",
+		Format: "[${time}] ${status} - ${latency} ${method} ${path}\n",
 		TimeInterval: time.Millisecond,
 		TimeFormat:   "02-01-2006 15:04:05",
 		TimeZone:     "Indonesia/Jakarta",
