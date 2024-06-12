@@ -51,7 +51,6 @@ func main() {
 	//=== handler lists end ===//
 
 	app := fiber.New()
-
 	
 	app.Use(recover.New())
 	app.Use(cors.New())
@@ -63,7 +62,6 @@ func main() {
 		TimeZone:     "Indonesia/Jakarta",
 	}))
 
-	
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("UP")
 	})
