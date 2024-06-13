@@ -70,12 +70,13 @@ func main() {
 	fiberProm.RegisterAt(app, "/metrics")
 	app.Use(fiberProm.Middleware)
 
+	api := app.Group("/api/v1")
 	//=== user routes ===//
-	app.Post("/users/register", userHandler.CreateUser)
-	app.Post("/users/confirm", userHandler.ConfirmUser)
-	app.Post("/users/login", userHandler.SignIn)
-	app.Get("/users/refresh-token", userHandler.RefreshToken)
-	app.Get("/users/profile", middleware.Auth(), userHandler.GetUser)
+	api.Post("/users/register", userHandler.CreateUser)
+	api.Post("/users/confirm", userHandler.ConfirmUser)
+	api.Post("/users/login", userHandler.SignIn)
+	api.Get("/users/refresh-token", userHandler.RefreshToken)
+	api.Get("/users/profile", middleware.Auth(), userHandler.GetUser)
 
 	//=== listen port ===//
 	if err := app.Listen(fmt.Sprintf(":%s", os.Getenv("APP_PORT"))); err != nil {
